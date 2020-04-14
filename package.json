@@ -9,6 +9,7 @@
     "clean": "rimraf build coverage",
     "ts:check": "tsc --allowJs false",
     "lint": "eslint --ext ts,tsx,js src",
+    "format": "prettier --write \"src/**/*.{js,ts,tsx,scss}\"",
     "analyze": "source-map-explorer build/static/js/*chunk*.js"
   },
   "eslintConfig": {
@@ -26,12 +27,28 @@
       "last 1 safari version"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn ts:check && yarn run test"
+    }
+  },
+  "lint-staged": {
+    "*.{scss,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{js,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix --max-warnings 0",
+      "git add"
+    ]
+  },
   "dependencies": {
     "react": "~16.13.0",
     "react-dom": "~16.13.0",
     "react-scripts": "~3.4.0",
-    "redux": "~4.0.0",
-    "typescript": "~3.8.0"
+    "redux": "~4.0.0"
   },
   "devDependencies": {
     "@types/enzyme": "~3.10.0",
@@ -41,7 +58,11 @@
     "@types/react-dom": "~16.9.0",
     "@types/react-redux": "~7.1.0",
     "enzyme": "~3.11.0",
+    "husky": "~4.2.5",
+    "lint-staged": "~10.1.3",
+    "prettier": "~2.0.4",
     "rimraf": "~3.0.0",
-    "source-map-explorer": "~2.4.0"
+    "source-map-explorer": "~2.4.0",
+    "typescript": "~3.8.0"
   }
 }
