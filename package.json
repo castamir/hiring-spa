@@ -2,23 +2,14 @@
   "name": "hiring-spa",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "typescript": "~3.7.2"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "clean": "rimraf build coverage",
+    "ts:check": "tsc --allowJs false",
+    "lint": "eslint --ext ts,tsx,js src",
+    "analyze": "source-map-explorer build/static/js/*chunk*.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,5 +25,23 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "react": "~16.13.0",
+    "react-dom": "~16.13.0",
+    "react-scripts": "~3.4.0",
+    "redux": "~4.0.0",
+    "typescript": "~3.8.0"
+  },
+  "devDependencies": {
+    "@types/enzyme": "~3.10.0",
+    "@types/jest": "~24.0.0",
+    "@types/node": "~12.0.0",
+    "@types/react": "~16.9.0",
+    "@types/react-dom": "~16.9.0",
+    "@types/react-redux": "~7.1.0",
+    "enzyme": "~3.11.0",
+    "rimraf": "~3.0.0",
+    "source-map-explorer": "~2.4.0"
   }
 }
