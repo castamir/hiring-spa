@@ -6,7 +6,7 @@ enum LinkType {
   STARTUP_JOBS,
 }
 
-enum State {
+export enum State {
   NEW_CONTACT,
   APPROVED,
   DECLINED,
