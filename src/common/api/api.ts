@@ -1,4 +1,4 @@
-import { CandidateReadDto, State } from "../domain/candidate";
+import { CandidateReadDto, State } from "../../domain/candidate";
 
 export const getCandidates = () => {
   return new Promise<CandidateReadDto[]>((resolve) => {
@@ -25,6 +25,6 @@ export const getCandidates = () => {
           location: "Kosice",
         },
       ]);
-    }, 5000);
+    }, 1000);
   });
 };
