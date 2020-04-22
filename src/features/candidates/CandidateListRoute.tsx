@@ -1,11 +1,14 @@
 import React from "react";
 
 import { CandidateReadDto } from "../../domain/candidate";
-import { getCandidates } from "../../common/api";
+import { getCandidates } from "../../common/api/api";
+import { Table } from "./CandidateListRoute.styles";
 
-export type Props = {};
+export type Props = {
+  onSelect: (candidate: CandidateReadDto) => void;
+};
 
-const CandidatesRoute: React.FC<Props> = () => {
+const CandidateListRoute: React.FC<Props> = ({ onSelect }) => {
   const [candidates, setCandidates] = React.useState<CandidateReadDto[]>([]);
 
   React.useEffect(() => {
@@ -16,12 +19,13 @@ const CandidatesRoute: React.FC<Props> = () => {
 
   return (
     <article>
-      <table>
+      <Table>
         <tr>
           <th>#</th>
           <th>Name</th>
           <th>Surname</th>
           <th>Email</th>
+          <th />
         </tr>
 
         {candidates.map((candidate, index) => (
@@ -30,11 +34,14 @@ const CandidatesRoute: React.FC<Props> = () => {
             <td>{candidate.name}</td>
             <td>{candidate.surname}</td>
             <td>{candidate.email}</td>
+            <td>
+              <button onClick={() => onSelect(candidate)}>Select</button>
+            </td>
           </tr>
         ))}
-      </table>
+      </Table>
     </article>
   );
 };
 
-export default CandidatesRoute;
+export default CandidateListRoute;

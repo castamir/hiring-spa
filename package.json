@@ -2,16 +2,6 @@
   "name": "hiring-spa",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false",
-    "clean": "rimraf build coverage",
-    "ts:check": "tsc --allowJs false",
-    "lint": "eslint --ext ts,tsx,js src",
-    "format": "prettier --write \"src/**/*.{js,ts,tsx,scss}\"",
-    "analyze": "source-map-explorer build/static/js/*chunk*.js"
-  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -57,12 +47,26 @@
       "enzyme-to-json/serializer"
     ]
   },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --watchAll=false",
+    "clean": "rimraf build coverage",
+    "ts:check": "tsc --allowJs false",
+    "lint": "eslint --ext ts,tsx,js src",
+    "format": "prettier --write \"src/**/*.{js,ts,tsx,scss}\"",
+    "analyze": "source-map-explorer build/static/js/*chunk*.js"
+  },
   "dependencies": {
+    "@material-ui/core": "^4.9.11",
+    "@material-ui/icons": "^4.9.1",
     "react": "~16.13.0",
     "react-dom": "~16.13.0",
-    "react-redux": "^7.2.0",
+    "react-is": "~16.13.1",
+    "react-redux": "~7.2.0",
     "react-scripts": "~3.4.0",
-    "redux": "~4.0.0"
+    "redux": "~4.0.0",
+    "styled-components": "~5.1.0"
   },
   "devDependencies": {
     "@types/enzyme": "~3.10.0",
@@ -72,6 +76,7 @@
     "@types/react": "~16.9.0",
     "@types/react-dom": "~16.9.0",
     "@types/react-redux": "~7.1.0",
+    "@types/styled-components": "^5.1.0",
     "enzyme": "~3.11.0",
     "enzyme-adapter-react-16": "~1.15.0",
     "enzyme-to-json": "~3.4.0",
