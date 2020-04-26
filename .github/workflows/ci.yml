@@ -1,0 +1,23 @@
+name: CI
+
+on: pull_request
+
+jobs:
+  check-ecm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # extract to a custom action for yarn caching
+      - uses: actions/cache@master
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - run: yarn install
+      - run: yarn ts:check
+      - run: yarn test --coverage
