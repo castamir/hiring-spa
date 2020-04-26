@@ -15,6 +15,12 @@ const CandidateDetailRoute: React.FC<Props> = ({ candidate }) => {
       <h2>
         {candidate.name} {candidate.surname}
       </h2>
+      <div>
+        <p>{candidate.nationality}</p>
+        <p>{candidate.state}</p>
+        <p>{candidate.email}</p>
+        <p>{candidate.links}</p>
+      </div>
     </div>
   );
 };
