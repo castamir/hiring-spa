@@ -20,6 +20,7 @@ const CandidateDetailRoute: React.FC<Props> = ({ candidate }) => {
         <p>{candidate.state}</p>
         <p>{candidate.email}</p>
         <p>{candidate.links}</p>
+        <p>{candidate.location}</p>
       </div>
     </div>
   );
