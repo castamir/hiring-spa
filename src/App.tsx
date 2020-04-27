@@ -1,23 +1,33 @@
 import React from "react";
+import { Switch } from "react-router-dom";
 
 import "./App.css";
 import CandidateListRoute from "./features/candidates/CandidateListRoute";
 import CandidateDetailRoute from "./features/candidates/CandidateDetailRoute";
 import { CandidateReadDto } from "./domain/candidate";
 import Screen from "./common/layout/Screen";
+import { Route } from "react-router-dom";
 
 const App: React.FC = () => {
   const [selected, setSelected] = React.useState<CandidateReadDto>();
 
   return (
     <Screen>
-      <React.Fragment>
-        <CandidateListRoute
-          onSelect={setSelected}
-          selectedCandidateId={selected?.id}
+      <Switch>
+        <Route
+          path="/candidate-detail"
+          render={() => <CandidateDetailRoute candidate={selected} />}
         />
-        <CandidateDetailRoute candidate={selected} />
-      </React.Fragment>
+        <Route
+          path="/"
+          render={() => (
+            <CandidateListRoute
+              onSelect={setSelected}
+              selectedCandidateId={selected?.id}
+            />
+          )}
+        />
+      </Switch>
     </Screen>
   );
 };
