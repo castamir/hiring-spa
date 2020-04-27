@@ -2,13 +2,17 @@ import React from "react";
 
 import { CandidateReadDto } from "../../domain/candidate";
 import { getCandidates } from "../../common/api/api";
-import { Table } from "./CandidateListRoute.styles";
+import { Table, TableRow, Button } from "./CandidateListRoute.styles";
 
 export type Props = {
   onSelect: (candidate: CandidateReadDto) => void;
+  selectedCandidateId?: string;
 };
 
-const CandidateListRoute: React.FC<Props> = ({ onSelect }) => {
+const CandidateListRoute: React.FC<Props> = ({
+  onSelect,
+  selectedCandidateId,
+}) => {
   const [candidates, setCandidates] = React.useState<CandidateReadDto[]>([]);
 
   React.useEffect(() => {
@@ -29,15 +33,24 @@ const CandidateListRoute: React.FC<Props> = ({ onSelect }) => {
         </tr>
 
         {candidates.map((candidate, index) => (
-          <tr key={candidate.email}>
+          <TableRow
+            key={candidate.email}
+            isSelected={selectedCandidateId === candidate.id}
+          >
             <td>{index + 1}.</td>
             <td>{candidate.name}</td>
             <td>{candidate.surname}</td>
             <td>{candidate.email}</td>
             <td>
-              <button onClick={() => onSelect(candidate)}>Select</button>
+              <Button
+                onClick={(e) => {
+                  onSelect(candidate);
+                }}
+              >
+                Select
+              </Button>
             </td>
-          </tr>
+          </TableRow>
         ))}
       </Table>
     </article>
