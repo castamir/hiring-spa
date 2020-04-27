@@ -12,7 +12,10 @@ const App: React.FC = () => {
   return (
     <Screen>
       <React.Fragment>
-        <CandidateListRoute onSelect={setSelected} />
+        <CandidateListRoute
+          onSelect={setSelected}
+          selectedCandidateId={selected?.id}
+        />
         <CandidateDetailRoute candidate={selected} />
       </React.Fragment>
     </Screen>
