@@ -1,22 +1,16 @@
 import React from "react";
 
 import "./App.css";
-import CandidateListRoute from "./features/candidates/CandidateListRoute";
-import CandidateDetailRoute from "./features/candidates/CandidateDetailRoute";
-import { CandidateReadDto } from "./domain/candidate";
 import Screen from "./common/layout/Screen";
+import CandidateDetailRoute from "./features/candidates/CandidateDetailRoute";
+import CandidateListRoute from "./features/candidates/CandidateListRoute";
 
 const App: React.FC = () => {
-  const [selected, setSelected] = React.useState<CandidateReadDto>();
-
   return (
     <Screen>
       <React.Fragment>
-        <CandidateListRoute
-          onSelect={setSelected}
-          selectedCandidateId={selected?.id}
-        />
-        <CandidateDetailRoute candidate={selected} />
+        <CandidateListRoute />
+        <CandidateDetailRoute candidate={undefined} />
       </React.Fragment>
     </Screen>
   );

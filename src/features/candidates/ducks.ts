@@ -6,6 +6,7 @@ enum ActionTypes {
   FETCH_CANDIDATES_REQUEST = "CANDIDATES/FETCH_CANDIDATES_REQUEST",
   FETCH_CANDIDATES_SUCCESS = "CANDIDATES/FETCH_CANDIDATES_SUCCESS",
   FETCH_CANDIDATES_FAILURE = "CANDIDATES/FETCH_CANDIDATES_FAILURE",
+  SELECT_CANDIDATE = "CANDIDATES/SELECT_CANDIDATE",
 }
 
 type CustomAction = {
@@ -25,6 +26,10 @@ export const fetchCandidatesFailure = (error: string) => ({
   type: ActionTypes.FETCH_CANDIDATES_FAILURE,
   payload: error,
 });
+export const selectCandidate = (data: CandidateReadDto) => ({
+  type: ActionTypes.SELECT_CANDIDATE,
+  payload: data,
+});
 
 type Actions = {
   [ActionTypes.FETCH_CANDIDATES_REQUEST]: ReturnType<typeof fetchCandidates>;
@@ -34,6 +39,7 @@ type Actions = {
   [ActionTypes.FETCH_CANDIDATES_FAILURE]: ReturnType<
     typeof fetchCandidatesFailure
   >;
+  [ActionTypes.SELECT_CANDIDATE]: ReturnType<typeof selectCandidate>;
 };
 
 // STATE
@@ -41,11 +47,13 @@ export type ReducerState = {
   candidateList: CandidateReadDto[];
   candidateListIsLoading: boolean;
   candidateListError: string | null;
+  selectedCandidate: CandidateReadDto | null;
 };
 export const initialState: ReducerState = {
   candidateList: [],
   candidateListIsLoading: false,
   candidateListError: null,
+  selectedCandidate: null,
 };
 
 type ReduxAction = Action & { payload: any };
@@ -105,10 +113,27 @@ const candidateListErrorReducer = (
   return state;
 };
 
+const selectedCandidateReducer = (
+  state: ReducerState["selectedCandidate"] | undefined,
+  action: any
+): ReducerState["selectedCandidate"] => {
+  if (state === undefined) {
+    return initialState.selectedCandidate;
+  }
+
+  switch (action.type) {
+    case ActionTypes.SELECT_CANDIDATE:
+      return action.payload;
+  }
+
+  return state;
+};
+
 export const reducer = combineReducers({
   candidateList: candidateListReducer,
   candidateListIsLoading: candidateListIsLoadingReducer,
   candidateListError: candidateListErrorReducer,
+  selectedCandidate: selectedCandidateReducer,
 });
 
 // SELECTORS
@@ -120,5 +145,7 @@ export const selectCandidateListError = (state: any) =>
   selectState(state).candidateListError;
 export const selectCandidateListIsLoading = (state: any) =>
   selectState(state).candidateListIsLoading;
+export const selectSelectedCandidate = (state: any) =>
+  selectState(state).selectedCandidate;
 
 // SAGAS

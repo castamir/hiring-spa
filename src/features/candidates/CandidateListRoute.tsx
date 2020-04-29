@@ -2,31 +2,31 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { CandidateReadDto } from "../../domain/candidate";
 import { getCandidates } from "../../common/api/api";
 import { Table, TableRow, Button } from "./CandidateListRoute.styles";
-import { fetchCandidatesSuccess, selectCandidateList } from "./ducks";
+import {
+  fetchCandidatesSuccess,
+  selectCandidate,
+  selectCandidateList,
+  selectSelectedCandidate,
+} from "./ducks";
 
 const mapStateToProps = (state: any) => ({
   candidateList: selectCandidateList(state),
+  selectedCandidate: selectSelectedCandidate(state),
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   onLoad: bindActionCreators(fetchCandidatesSuccess, dispatch),
+  onSelect: bindActionCreators(selectCandidate, dispatch),
 });
 
-export type BaseProps = {
-  onSelect: (candidate: CandidateReadDto) => void;
-  selectedCandidateId?: string;
-};
-
-export type Props = BaseProps &
-  ReturnType<typeof mapStateToProps> &
+export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const CandidateListRoute: React.FC<Props> = ({
   candidateList,
-  selectedCandidateId,
+  selectedCandidate,
   onSelect,
   onLoad,
 }) => {
@@ -50,7 +50,7 @@ const CandidateListRoute: React.FC<Props> = ({
         {candidateList.map((candidate, index) => (
           <TableRow
             key={candidate.email}
-            isSelected={selectedCandidateId === candidate.id}
+            isSelected={selectedCandidate === candidate}
           >
             <td>{index + 1}.</td>
             <td>{candidate.name}</td>
