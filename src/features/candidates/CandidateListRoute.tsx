@@ -1,25 +1,40 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 import { CandidateReadDto } from "../../domain/candidate";
 import { getCandidates } from "../../common/api/api";
 import { Table, TableRow, Button } from "./CandidateListRoute.styles";
+import { fetchCandidatesSuccess, selectCandidateList } from "./ducks";
 
-export type Props = {
+const mapStateToProps = (state: any) => ({
+  candidateList: selectCandidateList(state),
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  onLoad: bindActionCreators(fetchCandidatesSuccess, dispatch),
+});
+
+export type BaseProps = {
   onSelect: (candidate: CandidateReadDto) => void;
   selectedCandidateId?: string;
 };
 
-const CandidateListRoute: React.FC<Props> = ({
-  onSelect,
-  selectedCandidateId,
-}) => {
-  const [candidates, setCandidates] = React.useState<CandidateReadDto[]>([]);
+export type Props = BaseProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
+const CandidateListRoute: React.FC<Props> = ({
+  candidateList,
+  selectedCandidateId,
+  onSelect,
+  onLoad,
+}) => {
   React.useEffect(() => {
     getCandidates().then((result) => {
-      setCandidates(result);
+      onLoad(result);
     });
-  }, []);
+  }, [onLoad]);
 
   return (
     <article>
@@ -32,7 +47,7 @@ const CandidateListRoute: React.FC<Props> = ({
           <th />
         </tr>
 
-        {candidates.map((candidate, index) => (
+        {candidateList.map((candidate, index) => (
           <TableRow
             key={candidate.email}
             isSelected={selectedCandidateId === candidate.id}
@@ -57,4 +72,4 @@ const CandidateListRoute: React.FC<Props> = ({
   );
 };
 
-export default CandidateListRoute;
+export default connect(mapStateToProps, mapDispatchToProps)(CandidateListRoute);
