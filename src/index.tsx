@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { createBrowserHistory } from 'history';
 
 import "./index.css";
 
 import App from "./App";
 import { store } from "./common/redux/store";
 import * as serviceWorker from "./serviceWorker";
+
+export const browserHistory = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>

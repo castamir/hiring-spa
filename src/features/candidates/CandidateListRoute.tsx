@@ -1,8 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { RouteComponentProps } from "react-router-dom";
 
 import { getCandidates } from "../../common/api/api";
+import { CandidateReadDto } from "../../domain/candidate";
+import CandidateDetailRoute from "./CandidateDetailRoute";
 import { Table, TableRow, Button } from "./CandidateListRoute.styles";
 import {
   fetchCandidatesSuccess,
@@ -22,11 +25,13 @@ const mapDispatchToProps = (dispatch: any) => ({
 });
 
 export type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  RouteComponentProps;
 
 const CandidateListRoute: React.FC<Props> = ({
   candidateList,
   selectedCandidate,
+  history,
   onSelect,
   onLoad,
 }) => {
@@ -35,6 +40,11 @@ const CandidateListRoute: React.FC<Props> = ({
       onLoad(result);
     });
   }, [onLoad]);
+
+  const handleOnSelect = (candidate: CandidateReadDto) => {
+    onSelect(candidate);
+    history.push(`/candidateDetail/${candidate.id}`);
+  };
 
   return (
     <article>
@@ -47,7 +57,7 @@ const CandidateListRoute: React.FC<Props> = ({
           <th />
         </tr>
 
-        {candidateList.map((candidate, index) => (
+        {candidateList.map((candidate: CandidateReadDto, index: number) => (
           <TableRow
             key={candidate.email}
             isSelected={selectedCandidate === candidate}
@@ -57,13 +67,7 @@ const CandidateListRoute: React.FC<Props> = ({
             <td>{candidate.surname}</td>
             <td>{candidate.email}</td>
             <td>
-              <Button
-                onClick={(e) => {
-                  onSelect(candidate);
-                }}
-              >
-                Select
-              </Button>
+              <Button onClick={() => handleOnSelect(candidate)}>Select</Button>
             </td>
           </TableRow>
         ))}

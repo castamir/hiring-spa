@@ -2,7 +2,7 @@ import React from "react";
 import { CandidateReadDto } from "../../domain/candidate";
 
 export type Props = {
-  candidate?: CandidateReadDto;
+  candidate: CandidateReadDto | null;
 };
 
 const CandidateDetailRoute: React.FC<Props> = ({ candidate }) => {

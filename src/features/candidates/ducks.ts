@@ -9,11 +9,6 @@ enum ActionTypes {
   SELECT_CANDIDATE = "CANDIDATES/SELECT_CANDIDATE",
 }
 
-type CustomAction = {
-  type: ActionTypes;
-  payload: any;
-};
-
 export const fetchCandidates = () => ({
   type: ActionTypes.FETCH_CANDIDATES_REQUEST,
   payload: null,
