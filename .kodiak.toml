@@ -1,0 +1,33 @@
+# version is the only required setting in a kodiak config.
+# `1` is the only valid setting for this field.
+version = 1
+
+[merge]
+# Label to enable Kodiak to merge a PR.
+
+# By default, Kodiak will only act on PRs that have this label. You can disable
+# this requirement via `merge.require_automerge_label`.
+automerge_label = "automerge" # default: "automerge"
+
+# Choose merge method for Kodiak to use.
+#
+# Kodiak will report a configuration error if the selected merge method is
+# disabled for a repository.
+method = "squash" # default: first valid merge method in list "merge", "squash", "rebase", options: "merge", "squash", "rebase"
+
+# Once a PR is merged, delete the branch. This option behaves like the GitHub
+# repository setting "Automatically delete head branches", which automatically
+# deletes head branches after pull requests are merged.
+delete_branch_on_merge = true # default: false
+
+[merge.message]
+# By default (`"github_default"`), GitHub uses the title of a PR's first commit
+# for the merge commit title. `"pull_request_title"` uses the PR title for the
+# merge commit.
+title = "pull_request_title" # default: "github_default", options: "github_default", "pull_request_title"
+
+# By default (`"github_default"`), GitHub combines the titles of a PR's commits
+# to create the body text of a merge commit. `"pull_request_body"` uses the
+# content of the PR to generate the body content while `"empty"` sets an empty
+# body.
+body = "empty" # default: "github_default", options: "github_default", "pull_request_body", "empty"
